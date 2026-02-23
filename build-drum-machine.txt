@@ -1,0 +1,137 @@
+** start of index.html **
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Drum Machine</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="drum-machine">
+    <p id="display">Press a key</p>
+
+    <div id="pad-bank">
+      <button class="drum-pad" id="Heater-1">
+        Q
+        <audio class="clip" id="Q" src="https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3"></audio>
+      </button>
+      <button class="drum-pad" id="Heater-2">
+        W
+        <audio class="clip" id="W" src="https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3"></audio>
+      </button>
+      <button class="drum-pad" id="Heater-3">
+        E
+        <audio class="clip" id="E" src="https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3"></audio>
+      </button>
+      <button class="drum-pad" id="Heater-4">
+        A
+        <audio class="clip" id="A" src="https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3"></audio>
+      </button>
+      <button class="drum-pad" id="Clap">
+        S
+        <audio class="clip" id="S" src="https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3"></audio>
+      </button>
+      <button class="drum-pad" id="Open-HH">
+        D
+        <audio class="clip" id="D" src="https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3"></audio>
+      </button>
+      <button class="drum-pad" id="Kick-n'-Hat">
+        Z
+        <audio class="clip" id="Z" src="https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3"></audio>
+      </button>
+      <button class="drum-pad" id="Kick">
+        X
+        <audio class="clip" id="X" src="https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3"></audio>
+      </button>
+      <button class="drum-pad" id="Closed-HH">
+        C
+        <audio class="clip" id="C" src="https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3"></audio>
+      </button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+** end of index.html **
+
+** start of script.js **
+
+function playSound(key) {
+  const upperKey = key.toUpperCase();
+  const audio = document.getElementById(upperKey);
+  if (!audio) return;
+
+  audio.currentTime = 0;
+  audio.play();
+
+  const pad = audio.parentElement;
+  const display = document.getElementById('display');
+  if (pad && display) {
+    display.innerText = pad.id;
+  }
+}
+
+document.querySelectorAll('.drum-pad').forEach(pad => {
+  pad.addEventListener('click', () => {
+    const audio = pad.querySelector('audio.clip');
+    if (audio) {
+      playSound(audio.id);
+    }
+  });
+});
+
+document.addEventListener('keydown', event => {
+  const key = event.key.toUpperCase();
+  const validKeys = ['Q', 'W', 'E', 'A', 'S', 'D', 'Z', 'X', 'C'];
+  if (validKeys.includes(key)) {
+    playSound(key);
+  }
+});
+
+** end of script.js **
+
+** start of styles.css **
+
+body {
+  background-color: #1e1e2f;
+  color: white;
+  font-family: sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+#drum-machine {
+  max-width: 400px;
+  margin: auto;
+}
+
+#display {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  background-color: #333;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#pad-bank {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.drum-pad {
+  background-color: #444;
+  border: 2px solid #888;
+  border-radius: 5px;
+  padding: 20px;
+  cursor: pointer;
+  font-size: 1.5em;
+  text-align: center;
+  user-select: none;
+}
+
+** end of styles.css **
+
